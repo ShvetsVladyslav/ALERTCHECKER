@@ -1,5 +1,7 @@
 package com.project.alertcheker.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class AlertData {
     @Column(name = "alertUrl", nullable = false)
     private String alertUrl;
     @Column(name = "isCritical", nullable = false)
+    @JsonProperty
     private boolean isCritical;
 
     public Long getId() {

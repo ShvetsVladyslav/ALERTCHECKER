@@ -21,6 +21,7 @@ public class AlertController {
     @PutMapping("/insertData")
     public boolean insertData(@RequestBody AlertData data){
         try{
+            logger.info("Data to insert:\n" + "URL: " + data.getAlertUrl() + "\n" + "isCritical: " + data.isCritical());
             alertService.insertData(data);
             return true;
         }catch (Exception exception){
