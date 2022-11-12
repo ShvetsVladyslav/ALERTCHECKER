@@ -48,4 +48,13 @@ public class AlertData {
 
     public AlertData() {
     }
+
+    @Override
+    public String toString() {
+        return "AlertData{" +
+                "id=" + id +
+                ", alertUrl='" + alertUrl + '\'' +
+                ", isCritical=" + isCritical +
+                '}';
+    }
 }
