@@ -1,6 +1,7 @@
 package com.project.alertcheker.Controller;
 
 import com.project.alertcheker.Entity.AlertData;
+import com.project.alertcheker.Enum.TelegramMessage;
 import com.project.alertcheker.Service.AlertService;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -20,10 +21,8 @@ public class TelegramController extends TelegramLongPollingBot {
     private Message requestMessage = new Message();
     private final SendMessage response = new SendMessage();
     private final AlertService alertService;
-
     private final String botUsername;
     private final String botToken;
-
     public TelegramController(
             @Value("${telegram-bot.name}") String botUsername,
             @Value("${telegram-bot.token}") String botToken,
@@ -37,12 +36,10 @@ public class TelegramController extends TelegramLongPollingBot {
     public String getBotUsername() {
         return this.botUsername;
     }
-
     @Override
     public String getBotToken() {
         return this.botToken;
     }
-
     @Override
     @SneakyThrows
     public void onUpdateReceived(Update request) {
@@ -53,11 +50,10 @@ public class TelegramController extends TelegramLongPollingBot {
         if (request.hasMessage() && requestMessage.hasText()) {
             logger.info("Working onUpdateReceived, request text[{}]", request.getMessage().getText());
 
-
             if (requestMessage.getText().equals("/start")) {
                 try {
                     logger.info("Start Command");
-                    response.setText("Старт работы");
+                    response.setText(TelegramMessage.START_MESSAGE.getMessage());
                     execute(response);
                     logger.info("START OK");
                 }catch (TelegramApiException e) {
@@ -77,7 +73,6 @@ public class TelegramController extends TelegramLongPollingBot {
                     throw new RuntimeException(e);
                 }
             }
-
         }
     }
 }
