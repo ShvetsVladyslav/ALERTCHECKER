@@ -14,8 +14,8 @@ public class AppConfig {
         return new ObjectMapper();
     }
 
-    @Bean
-    TelegramBotsApi telegramBotsApi() throws TelegramApiException {
-        return new TelegramBotsApi(DefaultBotSession.class);
-    }
+//    @Bean
+//    TelegramBotsApi telegramBotsApi() throws TelegramApiException {
+//        return new TelegramBotsApi(DefaultBotSession.class);
+//    }
 }

@@ -51,10 +51,10 @@ public class AlertData {
 
     @Override
     public String toString() {
-        return "AlertData{" +
-                "id=" + id +
-                ", alertUrl='" + alertUrl + '\'' +
-                ", isCritical=" + isCritical +
-                '}';
+        return "AlertData{\n" +
+                "id=" + id + ",\n" +
+                "alertUrl='" + alertUrl + '\'' + ",\n" +
+                "isCritical=" + isCritical +
+                "\n}";
     }
 }

@@ -2,18 +2,19 @@ package com.project.alertcheker.Controller;
 
 import com.project.alertcheker.Entity.AlertData;
 import com.project.alertcheker.Service.AlertService;
-
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Getter
+@Component
 public class TelegramController extends TelegramLongPollingBot {
     private static final Logger logger = LoggerFactory.getLogger(TelegramController.class);
     private Message requestMessage = new Message();
@@ -24,15 +25,13 @@ public class TelegramController extends TelegramLongPollingBot {
     private final String botToken;
 
     public TelegramController(
-            TelegramBotsApi telegramBotsApi,
             @Value("${telegram-bot.name}") String botUsername,
             @Value("${telegram-bot.token}") String botToken,
             AlertService service) throws TelegramApiException {
         this.botUsername = botUsername;
         this.botToken = botToken;
         this.alertService = service;
-
-        telegramBotsApi.registerBot(this);
+        logger.info("Telegram bot created");
     }
     @Override
     public String getBotUsername() {
@@ -45,7 +44,9 @@ public class TelegramController extends TelegramLongPollingBot {
     }
 
     @Override
+    @SneakyThrows
     public void onUpdateReceived(Update request) {
+        logger.info("Update recieved");
         requestMessage = request.getMessage();
         response.setChatId(requestMessage.getChatId().toString());
 
