@@ -7,15 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AlertController {
     private static final Logger logger = LoggerFactory.getLogger(AlertController.class);
     @Autowired
     AlertService alertService;
-    @GetMapping("/getData")
-    public AlertData getData(@RequestBody String Url){
-        return alertService.getData(Url);
+    @GetMapping("/getListData")
+    public List<AlertData> getListData(@RequestParam String alertUrl){
+        logger.info("Finded data:\n" + alertService.getAlertData(alertUrl).toString());
+        return alertService.getAlertData(alertUrl);
     }
     @PutMapping("/insertData")
     public boolean insertData(@RequestBody AlertData data){
@@ -28,9 +31,18 @@ public class AlertController {
         }
     }
     @DeleteMapping("/deleteData")
-    public boolean deleteData(@RequestBody String Url){
+    public boolean deleteData(@RequestBody AlertData alertData){
         try {
-            alertService.deleteData(Url);
+            alertService.deleteData(alertData.getAlertUrl());
+            return true;
+        }catch (Exception exception){
+            return false;
+        }
+    }
+    @PatchMapping("/updateData")
+    public boolean updateData(@RequestParam String currentUrl,@RequestBody AlertData alertData){
+        try{
+            alertService.updateData(currentUrl, alertData);
             return true;
         }catch (Exception exception){
             return false;

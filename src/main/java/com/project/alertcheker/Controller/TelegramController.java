@@ -14,6 +14,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.List;
+
 @Getter
 @Component
 public class TelegramController extends TelegramLongPollingBot {
@@ -63,7 +66,7 @@ public class TelegramController extends TelegramLongPollingBot {
             }
             else {
                 try {
-                    AlertData entity = alertService.getData(requestMessage.getText());
+                    List<AlertData> entity = alertService.getAlertData(requestMessage.getText());
                     response.setText(entity.toString());
                     logger.info("Working, text[{}]", response.getText());
                     execute(response);
