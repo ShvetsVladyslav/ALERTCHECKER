@@ -69,10 +69,16 @@ public class AlertData {
 
     @Override
     public String toString() {
-        return "AlertData{\n" +
-                "alertUrl='" + alertUrl + '\'' + ",\n" +
-                "isCritical=" + isCritical + "\n" +
-                "comment = '" + comment + '\'' +
-                "\n}";
+        StringBuilder result = new StringBuilder();
+        result.append("Alert Data:\n");
+        result.append("URL: ").append(alertUrl).append(";\n");
+        if(isCritical){
+            result.append("Critical: ").append("\u01C3").append("\n");
+        }
+        else {
+            result.append("Critical: ").append("\u2705").append("\n");
+        }
+        result.append("Comment: ").append(comment);
+        return result.toString();
     }
 }
