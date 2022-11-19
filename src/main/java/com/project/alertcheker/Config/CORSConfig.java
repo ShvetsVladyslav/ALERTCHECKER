@@ -15,7 +15,7 @@ public class CORSConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:8080/").allowedHeaders("*");
+                registry.addMapping("/**").allowedOrigins("https://alert-check-bot.herokuapp.com/").allowedHeaders("*");
             }
         };
     }
