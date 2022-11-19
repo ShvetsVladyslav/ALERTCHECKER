@@ -31,6 +31,7 @@ public class AlertService {
         AlertData data = alertDataRepoMongo.findByAlertUrl(Url);
         data.setAlertUrl(alertData.getAlertUrl());
         data.setCritical(alertData.isCritical());
+        data.setComment(alertData.getComment());
         alertDataRepoMongo.save(data);
     }
 }
