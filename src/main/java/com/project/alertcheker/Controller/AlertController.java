@@ -27,6 +27,7 @@ public class AlertController {
             alertService.insertData(data);
             return true;
         }catch (Exception exception){
+            logger.info(exception.getMessage());
             return false;
         }
     }
@@ -36,6 +37,7 @@ public class AlertController {
             alertService.deleteData(alertData.getAlertUrl());
             return true;
         }catch (Exception exception){
+            logger.info(exception.getMessage());
             return false;
         }
     }
@@ -45,6 +47,7 @@ public class AlertController {
             alertService.updateData(currentUrl, alertData);
             return true;
         }catch (Exception exception){
+            logger.info(exception.getMessage());
             return false;
         }
     }

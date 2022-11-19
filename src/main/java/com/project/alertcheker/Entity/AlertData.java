@@ -1,27 +1,36 @@
 package com.project.alertcheker.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "t_alerts")
+//@Table(name = "t_alerts")
+@Document(collection = "AlertData")
 public class AlertData {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
-    @Column(name = "alertUrl", nullable = false)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "id", nullable = false)
+    @MongoId
+    @Indexed(unique = true)
+    private String id;
+//    @Column(name = "alertUrl", nullable = false)
+    @Field(name = "alertUrl")
     private String alertUrl;
-    @Column(name = "isCritical", nullable = false)
+//    @Column(name = "isCritical", nullable = false)
     @JsonProperty
+    @Field(name = "isCritical")
     private boolean isCritical;
+    @Field(name = "comment")
+    private String comment;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,9 +50,18 @@ public class AlertData {
         isCritical = critical;
     }
 
-    public AlertData(String alertUrl, boolean isCritical) {
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public AlertData(String alertUrl, boolean isCritical, String comment) {
         this.alertUrl = alertUrl;
         this.isCritical = isCritical;
+        this.comment = comment;
     }
 
     public AlertData() {
@@ -52,9 +70,9 @@ public class AlertData {
     @Override
     public String toString() {
         return "AlertData{\n" +
-                "id=" + id + ",\n" +
                 "alertUrl='" + alertUrl + '\'' + ",\n" +
-                "isCritical=" + isCritical +
+                "isCritical=" + isCritical + "\n" +
+                "comment = '" + comment + '\'' +
                 "\n}";
     }
 }
