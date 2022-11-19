@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AlertService {
@@ -29,9 +30,13 @@ public class AlertService {
     }
     public void updateData(String Url, AlertData alertData){
         AlertData data = alertDataRepoMongo.findByAlertUrl(Url);
+        if (alertData.getAlertUrl() != null && Objects.equals(alertData.getAlertUrl(), "")){
         data.setAlertUrl(alertData.getAlertUrl());
+        }
         data.setCritical(alertData.isCritical());
-        data.setComment(alertData.getComment());
+        if (!Objects.equals(data.getComment(), alertData.getComment()) && alertData.getComment() != null && Objects.equals(alertData.getAlertUrl(), "")) {
+            data.setComment(alertData.getComment());
+        }
         alertDataRepoMongo.save(data);
     }
 }
