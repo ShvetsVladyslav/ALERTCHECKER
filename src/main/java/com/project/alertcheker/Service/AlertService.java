@@ -30,11 +30,11 @@ public class AlertService {
     }
     public void updateData(String Url, AlertData alertData){
         AlertData data = alertDataRepoMongo.findByAlertUrl(Url);
-        if (alertData.getAlertUrl() != null && Objects.equals(alertData.getAlertUrl(), "")){
+        if (alertData.getAlertUrl() != null && !Objects.equals(alertData.getAlertUrl(), "")){
         data.setAlertUrl(alertData.getAlertUrl());
         }
         data.setCritical(alertData.isCritical());
-        if (!Objects.equals(data.getComment(), alertData.getComment()) && alertData.getComment() != null && Objects.equals(alertData.getAlertUrl(), "")) {
+        if (!Objects.equals(data.getComment(), alertData.getComment()) && alertData.getComment() != null && !Objects.equals(alertData.getAlertUrl(), "")) {
             data.setComment(alertData.getComment());
         }
         alertDataRepoMongo.save(data);
