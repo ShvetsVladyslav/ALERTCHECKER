@@ -39,4 +39,13 @@ public class AlertService {
         }
         alertDataRepoMongo.save(data);
     }
+    public String parseListData(List<AlertData> dataList){
+        StringBuilder result = new StringBuilder();
+        for (AlertData data:
+             dataList) {
+            result.append(data.toString());
+            result.append("\n");
+        }
+        return result.toString();
+    }
 }

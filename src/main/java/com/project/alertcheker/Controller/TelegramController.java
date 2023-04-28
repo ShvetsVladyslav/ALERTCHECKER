@@ -5,8 +5,7 @@ import com.project.alertcheker.Enum.TelegramMessage;
 import com.project.alertcheker.Service.AlertService;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -19,8 +18,8 @@ import java.util.List;
 
 @Getter
 @Component
+@Slf4j
 public class TelegramController extends TelegramLongPollingBot {
-    private static final Logger logger = LoggerFactory.getLogger(TelegramController.class);
     private Message requestMessage = new Message();
     private final SendMessage response = new SendMessage();
     private final AlertService alertService;
@@ -33,7 +32,7 @@ public class TelegramController extends TelegramLongPollingBot {
         this.botUsername = botUsername;
         this.botToken = botToken;
         this.alertService = service;
-        logger.info("Telegram bot created");
+        log.info("Telegram bot created");
     }
     @Override
     public String getBotUsername() {
@@ -46,33 +45,37 @@ public class TelegramController extends TelegramLongPollingBot {
     @Override
     @SneakyThrows
     public void onUpdateReceived(Update request) {
-        logger.info("Update recieved");
+        log.info("Update recieved");
         requestMessage = request.getMessage();
         response.setChatId(requestMessage.getChatId().toString());
 
         if (request.hasMessage() && requestMessage.hasText()) {
-            logger.info("Working onUpdateReceived, request text[{}]", request.getMessage().getText());
+            log.info("Working onUpdateReceived, request text[{}]", request.getMessage().getText());
 
             if (requestMessage.getText().equals("/start")) {
                 try {
-                    logger.info("Start Command");
+                    log.info("Start Command");
                     response.setText(TelegramMessage.START_MESSAGE.getMessage());
                     execute(response);
-                    logger.info("START OK");
+                    log.info("START OK");
                 }catch (TelegramApiException e) {
-                    logger.error("Get {0} exception", e);
+                    log.error("Get {0} exception", e);
+                    response.setText(TelegramMessage.ERROR_MESSAGE.getMessage());
+                    execute(response);
                     throw new RuntimeException(e);
                 }
             }
             else {
                 try {
                     List<AlertData> entity = alertService.getAlertData(requestMessage.getText());
-                    response.setText(entity.toString());
-                    logger.info("Working, text[{}]", response.getText());
+                    response.setText(alertService.parseListData(entity));
+                    log.info("Working, text[{}]", response.getText());
                     execute(response);
-                    logger.info("OK");
+                    log.info("OK");
                 } catch (Exception e) {
-                    logger.error("Get {0} exception", e);
+                    log.error("Get {0} exception", e);
+                    response.setText(TelegramMessage.ERROR_MESSAGE.getMessage());
+                    execute(response);
                     throw new RuntimeException(e);
                 }
             }
