@@ -73,7 +73,7 @@ public class AlertData {
         result.append("Alert Data:\n");
         result.append("URL: ").append(alertUrl).append(";\n");
         if(isCritical){
-            result.append("Critical: ").append("\u1034").append("\n");
+            result.append("Critical: ").append("\uD83D\uDD25").append("\n");
         }
         else {
             result.append("Critical: ").append("\u2705").append("\n");
