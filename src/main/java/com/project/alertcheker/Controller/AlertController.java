@@ -15,6 +15,13 @@ public class AlertController {
     private static final Logger logger = LoggerFactory.getLogger(AlertController.class);
     @Autowired
     AlertService alertService;
+
+    @GetMapping("/getAllAlert")
+    public List<AlertData> getAllData(){
+        List<AlertData> data = alertService.getAllAlert();
+        logger.info("Finded data:\n" + data.toString());
+        return data;
+    }
     @GetMapping("/getListData")
     public List<AlertData> getListData(@RequestParam String alertUrl){
         logger.info("Finded data:\n" + alertService.getAlertData(alertUrl).toString());

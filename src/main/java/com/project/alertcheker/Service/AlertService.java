@@ -15,8 +15,8 @@ public class AlertService {
 //    private AlertDataRepositoryPG alertDataRepositoryPG;
     @Autowired
     private AlertDataRepoMongo alertDataRepoMongo;
-    public AlertData getData(String Url){
-        return alertDataRepoMongo.findByAlertUrl(Url);
+    public List<AlertData> getAllAlert(){
+        return alertDataRepoMongo.findAll();
     }
     public List<AlertData> getAlertData(String Url){
         return alertDataRepoMongo.findByAlertUrlContaining(Url);
