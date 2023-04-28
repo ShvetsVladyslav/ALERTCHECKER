@@ -78,7 +78,7 @@ public class AlertData {
         else {
             result.append("Critical: ").append("\u2705").append("\n");
         }
-        result.append("Comment: ").append(comment);
+        result.append("Comment: ").append(comment).append("\n");
         return result.toString();
     }
 }
