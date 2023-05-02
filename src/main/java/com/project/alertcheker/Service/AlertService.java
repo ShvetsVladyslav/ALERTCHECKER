@@ -19,7 +19,7 @@ public class AlertService {
         return alertDataRepoMongo.findAll();
     }
     public List<AlertData> getAlertData(String Url){
-        return alertDataRepoMongo.findByAlertUrlContaining(Url);
+        return alertDataRepoMongo.findByAlertUrlLikeIgnoreCase(Url);
     }
     public void insertData(AlertData data){
         alertDataRepoMongo.save(data);

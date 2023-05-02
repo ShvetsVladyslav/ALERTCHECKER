@@ -9,4 +9,5 @@ import java.util.List;
 public interface AlertDataRepoMongo extends MongoRepository<AlertData, String> {
     AlertData findByAlertUrl(String alertUrl);
     List<AlertData> findByAlertUrlContaining(String alertUrl);
+    List<AlertData> findByAlertUrlLikeIgnoreCase(String alertUrl);
 }
