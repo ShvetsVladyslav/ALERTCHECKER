@@ -33,7 +33,9 @@ public class AlertService {
         if (alertData.getAlertUrl() != null && !Objects.equals(alertData.getAlertUrl(), "")){
         data.setAlertUrl(alertData.getAlertUrl());
         }
-        data.setCritical(alertData.isCritical());
+        if (!Objects.equals(alertData.isCritical(),data.isCritical())) {
+            data.setCritical(alertData.isCritical());
+        }
         if (!Objects.equals(data.getComment(), alertData.getComment()) && alertData.getComment() != null && !Objects.equals(alertData.getAlertUrl(), "")) {
             data.setComment(alertData.getComment());
         }
