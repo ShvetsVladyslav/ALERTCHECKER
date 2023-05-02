@@ -19,7 +19,7 @@ public class AlertService {
         return alertDataRepoMongo.findAll();
     }
     public List<AlertData> getAlertData(String Url){
-        return alertDataRepoMongo.findByAlertUrlLikeIgnoreCase(Url);
+        return alertDataRepoMongo.findByAlertUrlContainingIgnoreCase(Url);
     }
     public void insertData(AlertData data){
         alertDataRepoMongo.save(data);
@@ -31,7 +31,7 @@ public class AlertService {
     public void updateData(String Url, AlertData alertData){
         AlertData data = alertDataRepoMongo.findByAlertUrl(Url);
         if (alertData.getAlertUrl() != null && !Objects.equals(alertData.getAlertUrl(), "")){
-        data.setAlertUrl(alertData.getAlertUrl());
+            data.setAlertUrl(alertData.getAlertUrl());
         }
         if (!Objects.equals(alertData.isCritical(),data.isCritical())) {
             data.setCritical(alertData.isCritical());
